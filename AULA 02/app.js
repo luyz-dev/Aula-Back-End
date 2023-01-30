@@ -75,8 +75,15 @@ entradaDados.question('Digite seu nome: \n', function(nome) {
                         console.log('ERRO: Você deixou de entrar com algum valor.')
                     }else if(isNaN(valor1) || isNaN(valor2) || isNaN(valor3)  || isNaN(valor4) ){
                         console.log('ERRO: Você não digitou um número em algum valor.')
+                    }else if(valor1 < 0 || valor1 > 10 || valor2 < 0 || valor2 > 10 || valor3 < 0 || valor3 > 10 || valor4 < 0 || valor4 > 10){ 
+                        console.log('ERRO: você digitou uma nota inválida')
                     }else{
                         media = (parseFloat(valor1) + parseFloat(valor2) + parseFloat(valor3) + parseFloat(valor4))/4
+                        if(media < 7){
+                            console.log('Você foi reprovado')
+                        }else{
+                            console.log('Você foi aprovado')
+                        }
                         console.log(media)
                     }
                 })
