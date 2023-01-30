@@ -1,8 +1,8 @@
 /************************************************************************************
  * Objetivo: Calcular a média de quatro notas escolares
  * Autor: Luiz Gustavo
- * Data: 27/01/2023
- * Versão: 1.0
+ * Data: 30/01/2023
+ * Versão: 1.1
 ************************************************************************************/
 
 //import da biblioteca readline
@@ -75,16 +75,18 @@ entradaDados.question('Digite seu nome: \n', function(nome) {
                         console.log('ERRO: Você deixou de entrar com algum valor.')
                     }else if(isNaN(valor1) || isNaN(valor2) || isNaN(valor3)  || isNaN(valor4) ){
                         console.log('ERRO: Você não digitou um número em algum valor.')
+                    //Validação para entrada de dados somente entre 0 e 10
                     }else if(valor1 < 0 || valor1 > 10 || valor2 < 0 || valor2 > 10 || valor3 < 0 || valor3 > 10 || valor4 < 0 || valor4 > 10){ 
-                        console.log('ERRO: você digitou uma nota inválida')
+                        console.log('ERRO: os valores precisam ser entre 0 e 10')
                     }else{
                         media = (parseFloat(valor1) + parseFloat(valor2) + parseFloat(valor3) + parseFloat(valor4))/4
+                    //Validação para a média de aprovação(nota maior ou igual a 7) ou reprovação(nota menor que 7)    
                         if(media < 7){
-                            console.log('Você foi reprovado')
+                            console.log('Status Aluno: Reprovado')
                         }else{
-                            console.log('Você foi aprovado')
+                            console.log('Status Aluno: Aprovado')
                         }
-                        console.log(media)
+                        console.log('Média do Aluno: '+ media.toFixed(1))
                     }
                 })
             })
