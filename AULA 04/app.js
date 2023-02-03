@@ -2,11 +2,14 @@
  * Objetivo: Projeto para realizar calculos matemáticos(SOMAR, SUBTRAIR, MULTIPLICAR E DIVIDIR)
  * Autor: Luiz Gustavo
  * Data: 03/02/2023
- * Versão: 1.0
+ * Versão: 1.1
 ************************************************************************************************/
 
 //import da biblioteca readline
 var readline = require('readline')
+
+//import da biblioteca e da calculadora(que está na minha maquina)
+var matematica = require('./modulo/calculadora.js')
 
 //Cria o objeto para ser especialista em entrada de dados pelo teclado
 var entradaDados = readline.createInterface({
@@ -39,29 +42,12 @@ entradaDados.question('Valor1: \n', function (numero1) {
             } else {
                 //toUpperCase - converte uma string em MAIUSCULO
                 //toLowerCase - converte uma string em minusulo
-                if (operacao == 'SOMAR') {
-                    resultado = Number(valor1) + Number(valor2)
-                } else if (operacao == 'SUBTRAIR') {
-                    resultado = Number(valor1) - Number(valor2)
-                } else if (operacao == 'MULTIPLICAR') {
-                    resultado = Number(valor1) * Number(valor2)
-                } else if (operacao == 'DIVIDIR') {
-                    if (valor1 == 0 || valor2 == 0) {
-                        console.log('0 não pode ser utilizado em divisão')
-                        entradaDados.close()
-                    } else {
-                        resultado = Number(valor1) / Number(valor2)
-                    }
-                }
-
-                //Validação para tratar quando a variável resultado não for processada por algum problema
-                if(resultado == undefined){
-                    console.log('Não foi possivel encontrar um valor válido')
-                    entradaDados.close()
+                resultado = matematica.calculadora(valor1,valor2,operacao)
+                if(resultado != false){
+                    console.log(resultado)
                 }else{
-                    console.log(resultado.toFixed(2))
+                    entradaDados.close()
                 }
-                
             }
         })
     })
