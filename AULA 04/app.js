@@ -43,8 +43,9 @@ entradaDados.question('Valor1: \n', function (numero1) {
                 //toUpperCase - converte uma string em MAIUSCULO
                 //toLowerCase - converte uma string em minusulo
                 resultado = matematica.calculadora(valor1,valor2,operacao)
-                if(resultado != false){
+                if(resultado !== false){
                     console.log(resultado)
+                    entradaDados.close()
                 }else{
                     entradaDados.close()
                 }
