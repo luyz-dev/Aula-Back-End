@@ -28,6 +28,7 @@ entradaDados.question('Digite a tabuada inicial: \n', function (tabInicial) {
                 let calculoTabuadas = Number()
                 calculoTabuadas = calcTabuadas.tabuadas(tabuadaInicial, tabuadaFinal, multiplicadorMinimo, multiplicadorMaximo)
                 console.log('************* Fim Das Tabuadas *****************')
+                entradaDados.close()
             })
         })
     })
