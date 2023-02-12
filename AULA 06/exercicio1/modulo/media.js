@@ -15,24 +15,18 @@ const calcMedia = function (notaUM, notaDois, notaTres, notaQuadro) {
 
     if (nota1 == '' || nota2 == '' || nota3 == '' || nota4 == '') {
         status = false
-    }else if(isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)){
+    } else if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)) {
         status = false
     } else if (nota1 > 100 || nota1 < 0 || nota2 > 100 || nota2 < 0 || nota3 > 100 || nota3 < 0 || nota4 > 100 || nota4 < 0) {
         status = false
     } else {
         let media
         media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4)) / 4
-        if (media >= 50 && media < 70){
-            let notaDoExame
-            calcMediaExame(media, notaDoExame)
-        } else {
-            return media
-        }
-        return status
+        return media
     }
 }
 
-const calcMediaExame = function(mediaDoAluno, notaDoExame){
+const calcMediaExame = function (mediaDoAluno, notaDoExame) {
     let notaExame = String(notaDoExame).replace(',', '.')
     let media = String(mediaDoAluno).replace(',', '.')
     let mediaExame
@@ -48,41 +42,41 @@ const calcMediaExame = function(mediaDoAluno, notaDoExame){
     }
 }
 
-const definicaoDeSexoDoAluno = function(sexoDoAluno){
+const definicaoDeSexoDoAluno = function (sexoDoAluno) {
     let definicaoAluno
     let generoDoAluno = sexoDoAluno
     let status = true
 
-    if(generoDoAluno == ''){
+    if (generoDoAluno == '') {
         status = false
-    }else if(!isNaN(generoDoAluno)){
+    } else if (!isNaN(generoDoAluno)) {
         status = false
-    }else if(generoDoAluno != 'M' && generoDoAluno != 'F'){
+    } else if (generoDoAluno != 'M' && generoDoAluno != 'F') {
         status = false
-    }else if(generoDoAluno == 'M'){
-        definicaoAluno = 'Aluno'
+    } else if (generoDoAluno == 'M') {
+        definicaoAluno = ' O aluno'
         return definicaoAluno
-    }else if(generoDoAluno == 'F'){
-        definicaoAluno = 'Aluna'
+    } else if (generoDoAluno == 'F') {
+        definicaoAluno = 'A aluna'
         return definicaoAluno
     }
 }
 
-const definicaoDeSexoDoProfessor = function(sexoDoProfessor){
+const definicaoDeSexoDoProfessor = function (sexoDoProfessor) {
     let definicaoProfessor
     let generoDoProfessor = sexoDoProfessor
     let status = true
 
-    if(generoDoProfessor == ''){
+    if (generoDoProfessor == '') {
         status = false
-    }else if(!isNaN(generoDoProfessor)){
+    } else if (!isNaN(generoDoProfessor)) {
         status = false
-    }else if(generoDoProfessor != 'M' && generoDoProfessor != 'F'){
+    } else if (generoDoProfessor != 'M' && generoDoProfessor != 'F') {
         status = false
-    }else if(generoDoProfessor == 'M'){
+    } else if (generoDoProfessor == 'M') {
         definicaoProfessor = 'Professor'
         return definicaoProfessor
-    }else{
+    } else {
         definicaoProfessor = 'Professora'
         return definicaoProfessor
     }
@@ -90,10 +84,7 @@ const definicaoDeSexoDoProfessor = function(sexoDoProfessor){
 
 module.exports = {
     calcMedia,
+    calcMediaExame,
     definicaoDeSexoDoAluno,
     definicaoDeSexoDoProfessor
 }
-
-// const verificacaoDeDados = function(valorNomeDoAluno){
-
-// }
