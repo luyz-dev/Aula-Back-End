@@ -24,6 +24,7 @@ const calcMedia = function (notaUM, notaDois, notaTres, notaQuadro) {
         media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4)) / 4
         return media
     }
+    return status
 }
 
 const calcMediaExame = function (mediaDoAluno, notaDoExame) {
@@ -40,6 +41,7 @@ const calcMediaExame = function (mediaDoAluno, notaDoExame) {
         mediaExame = (Number(media) + Number(notaExame)) / 2
         return mediaExame
     }
+    return status
 }
 
 const definicaoDeSexoDoAluno = function (sexoDoAluno) {
@@ -60,6 +62,7 @@ const definicaoDeSexoDoAluno = function (sexoDoAluno) {
         definicaoAluno = 'A aluna'
         return definicaoAluno
     }
+    return status
 }
 
 const definicaoDeSexoDoProfessor = function (sexoDoProfessor) {
@@ -80,6 +83,7 @@ const definicaoDeSexoDoProfessor = function (sexoDoProfessor) {
         definicaoProfessor = 'Professora'
         return definicaoProfessor
     }
+    return status
 }
 
 module.exports = {

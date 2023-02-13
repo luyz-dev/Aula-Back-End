@@ -26,9 +26,14 @@ entradaDados.question('Digite a tabuada inicial: \n', function (tabInicial) {
             entradaDados.question('Digite o maximo multiplicador: \n', function (maxMultiplicador) {
                 let multiplicadorMaximo = maxMultiplicador
                 let calculoTabuadas = Number()
+
                 calculoTabuadas = calcTabuadas.tabuadas(tabuadaInicial, tabuadaFinal, multiplicadorMinimo, multiplicadorMaximo)
-                console.log('************* Fim Das Tabuadas *****************')
-                entradaDados.close()
+                if (calculoTabuadas == false) {
+                    entradaDados.close()
+                } else {
+                    console.log('************* Fim Das Tabuadas *****************')
+                    entradaDados.close()
+                }
             })
         })
     })
