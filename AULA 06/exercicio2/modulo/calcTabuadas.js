@@ -18,7 +18,7 @@ const tabuadas = function (tabuadaInicial, tabuadaFinal, multiplicadorMinimo, mu
     }else if(isNaN(maxMultiplicador) || isNaN(minMultiplicador) || isNaN(inicialTabuada) || isNaN(finalTabuada)){
         console.log('ERRO: Digite número em todos os valores')
         status = false  
-    } else if (maxMultiplicador < 2 || maxMultiplicador > 100 || minMultiplicador < 2 || minMultiplicador > 100) {
+    } else if (maxMultiplicador < 1 || maxMultiplicador > 50 || minMultiplicador < 1 || minMultiplicador > 50) {
         console.log('ERRO: Digite um número válido, Entre 2 e 100')
         status = false
     } else if (maxMultiplicador < minMultiplicador) {
@@ -27,9 +27,9 @@ const tabuadas = function (tabuadaInicial, tabuadaFinal, multiplicadorMinimo, mu
     } else if (finalTabuada < inicialTabuada) {
         console.log('ERRO: Tabuada final tem que ser maior que a inicial')
         status = false
-    } else if (tabuadaInicial < 1 || tabuadaFinal > 50) {
+    } else if (tabuadaInicial < 2 || tabuadaFinal > 100) {
         status = false
-        console.log('ERRO: A tabuada tem que começar no minimo 1 e a final só pode ir até 50')
+        console.log('ERRO: A tabuada tem que começar no minimo 2 e a final só pode ir até 200')
     } else {
         let resultado
         let minMultiplicadorCalculado
