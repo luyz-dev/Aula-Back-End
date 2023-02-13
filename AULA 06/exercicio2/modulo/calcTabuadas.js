@@ -14,13 +14,16 @@ const tabuadas = function (tabuadaInicial, tabuadaFinal, multiplicadorMinimo, mu
     if (maxMultiplicador == '' || minMultiplicador == '' || inicialTabuada == '' || finalTabuada == '') {
         console.log('ERRO: Digite todos os valores')
         entradaDados.close()
+    }else if(isNaN(maxMultiplicador) || isNaN(minMultiplicador) || isNaN(inicialTabuada) || isNaN(finalTabuada)){
+        console.log('ERRO: Digite número em todos os valores')
+        entradaDados.close()
     } else if (maxMultiplicador < 2 || maxMultiplicador > 100 || minMultiplicador < 2 || minMultiplicador > 100) {
         console.log('ERRO: Digite um número válido, Entre 2 e 100')
         entradaDados.close()
-    } else if (maxMultiplicador <= minMultiplicador) {
+    } else if (maxMultiplicador < minMultiplicador) {
         console.log('ERRO: Maximo multiplicador tem que ser maior que o minimo multiplicador')
         entradaDados.close()
-    } else if (finalTabuada <= inicialTabuada) {
+    } else if (finalTabuada < inicialTabuada) {
         console.log('ERRO: Tabuada final tem que ser maior que a inicial')
         entradaDados.close()
     } else if (tabuadaInicial < 1 || tabuadaFinal > 50) {
