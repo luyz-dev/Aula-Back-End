@@ -20,7 +20,7 @@ entradaDados.question('Digite o nome do aluno: \n', function (nomeDoAluno) {
     if (nomeAluno == '') {
         console.log('ERRO: NÃO FOI DIGITADO O NOME DO ALUNO')
         entradaDados.close()
-    } else if (!isNaN(nomeAluno)) {
+    } else if (/[0-9]/.test(nomeAluno)) {
         console.log('ERRO: NOME DO ALUNO FOI DIGITADO COM NÚMERO')
         entradaDados.close()
     } else {
@@ -29,7 +29,7 @@ entradaDados.question('Digite o nome do aluno: \n', function (nomeDoAluno) {
             if (sexoAluno == '') {
                 console.log('ERRO: NÃO FOI DIGITADO O SEXO DO ALUNO')
                 entradaDados.close()
-            } else if (!isNaN(sexoAluno)) {
+            } else if (/[0-9]/.test(sexoAluno)) {
                 console.log('ERRO: SEXO DO ALUNO FOI DIGITADO COM NÚMERO')
                 entradaDados.close()
             } else if (sexoAluno != 'M' && sexoAluno != 'F') {
@@ -44,7 +44,7 @@ entradaDados.question('Digite o nome do aluno: \n', function (nomeDoAluno) {
                     if (nomeProfessor == '') {
                         console.log('ERRO: NÃO FOI DIGITADO O NOME DO PROFESSOR')
                         entradaDados.close()
-                    } else if (!isNaN(nomeProfessor)) {
+                    } else if (/[0-9]/.test(nomeProfessor)) {
                         console.log('ERRO: NOME DO PROFESSOR FOI DIGITADO COM NÚMERO')
                         entradaDados.close()
                     } else {
@@ -53,7 +53,7 @@ entradaDados.question('Digite o nome do aluno: \n', function (nomeDoAluno) {
                             if (sexoProfessor == '') {
                                 console.log('ERRO: NÃO FOI DIGITADO O SEXO DO PROFESSOR')
                                 entradaDados.close()
-                            } else if (!isNaN(sexoProfessor)) {
+                            } else if (/[0-9]/.test(sexoProfessor)) {
                                 console.log('ERRO: SEXO DO PROFESSOR FOI DIGITADO COM NÚMERO')
                                 entradaDados.close()
                             } else if (sexoProfessor != 'M' && sexoProfessor != 'F') {
@@ -113,7 +113,7 @@ entradaDados.question('Digite o nome do aluno: \n', function (nomeDoAluno) {
                                                                     } else if (mediaAluno >= 70) {
                                                                         statusAluno = ('APROVADO')
                                                                         console.log('********************* RELÁTORIO DO ALUNO *********************')
-                                                                        console.log(`O ${nomeDefinidoAluno} ${nomeAluno} foi ${statusAluno} na disciplina ${nomeDisciplina}. \n` +
+                                                                        console.log(`${nomeDefinidoAluno} ${nomeAluno} foi ${statusAluno} na disciplina ${nomeDisciplina}. \n` +
                                                                             `Curso: ${nomeCurso} \n` +
                                                                             `${nomeDefinidoProfessor}: ${nomeProfessor} \n` +
                                                                             `Notas: ${nota1}, ${nota2}, ${nota3}, ${nota4} \n` +
@@ -128,7 +128,7 @@ entradaDados.question('Digite o nome do aluno: \n', function (nomeDoAluno) {
                                                                             if (mediaExame > 60) {
                                                                                 statusAluno = (' APROVADO ')
                                                                                 console.log('********************* RELÁTORIO DO ALUNO *********************')
-                                                                                console.log(`O ${nomeDefinidoAluno} ${nomeAluno} foi ${statusAluno} na disciplina ${nomeDisciplina}. \n` +
+                                                                                console.log(`${nomeDefinidoAluno} ${nomeAluno} foi ${statusAluno} na disciplina ${nomeDisciplina}. \n` +
                                                                                     `Curso: ${nomeCurso} \n` +
                                                                                     `${nomeDefinidoProfessor}: ${nomeProfessor} \n` +
                                                                                     `Notas: ${nota1}, ${nota2}, ${nota3}, ${nota4}, ${notaExame} \n` +
@@ -138,7 +138,7 @@ entradaDados.question('Digite o nome do aluno: \n', function (nomeDoAluno) {
                                                                             } else {
                                                                                 statusAluno = (' REPROVADO ')
                                                                                 console.log('********************* RELÁTORIO DO ALUNO *********************')
-                                                                                console.log(`O ${nomeDefinidoAluno} ${nomeAluno} foi ${statusAluno} na disciplina ${nomeDisciplina}. \n` +
+                                                                                console.log(`${nomeDefinidoAluno} ${nomeAluno} foi ${statusAluno} na disciplina ${nomeDisciplina}. \n` +
                                                                                     `Curso: ${nomeCurso} \n` +
                                                                                     `${nomeDefinidoProfessor}: ${nomeProfessor} \n` +
                                                                                     `Notas: ${nota1}, ${nota2}, ${nota3}, ${nota4}, ${notaExame} \n` +
