@@ -129,6 +129,13 @@ const removerItem = function(nomeItem, arrayLista) {
         status = false
     }
     return status
+
+    //ou 
+    // if(status){
+    //     return copiaLista
+    // }else{
+    //     return false
+    // }
 }
 
 console.table(removerItem('José', listaNomes))
