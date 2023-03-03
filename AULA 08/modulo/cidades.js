@@ -7,19 +7,40 @@
 
 var brasil = require('./estados_cidades')
 
+let pegarEstados = brasil.estadosCidades.estados
+
 const getListaDeEstados = function () {
     let listaJson = {}
     let uf = []
+    let quantidade
 
-    brasil.estadosCidades.estados.forEach(function(estado){
-        uf.push(estado.sigla)
-    })
+    pegarEstados.forEach((estado) => uf.push(estado.sigla))
 
     listaJson = {
-        uf
+        uf,
+        quantidade: pegarEstados.length
     }
 
     return listaJson
 }
 
-console.log(getListaDeEstados())
+const getDadosEstado = function (sigla) {
+    let uf = sigla
+    let listaDados = {}
+
+    pegarEstados.forEach((estados) => {
+        if(estados.sigla == uf){
+            listaDados = {
+                uf: estados.sigla,
+                descricao: estados.nome,
+                capital: estados.capital,
+                regiao: estados.regiao
+            }
+        }
+    })
+    return listaDados
+}
+
+
+
+console.log(getDadosEstado('SP'))
