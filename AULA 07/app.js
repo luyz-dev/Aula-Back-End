@@ -265,6 +265,7 @@ const relatorioDeProdutos = function () {
     let contCor = 0
     let contModelo = 0
     let tamanhoArrayProduto = listProdutosJson.produtos.length
+
     console.log('****************** Relátorio ******************')
     while (cont < tamanhoArrayProduto) {
         console.log('Nome: ' + listProdutosJson.produtos[cont].nome)
@@ -273,16 +274,21 @@ const relatorioDeProdutos = function () {
         console.log('Valor: ' + listProdutosJson.produtos[cont].valor)
         console.log('Descrição: ' + listProdutosJson.produtos[cont].descricao)
         console.log('Código: ' + listProdutosJson.produtos[cont].codigo)
+
         let contadorCor = contCor
         console.log('Cores: ')
-        while (contadorCor < listProdutosJson.produtos[cont].cores.length) {
-            console.log('    *' + listProdutosJson.produtos[cont].cores[contadorCor])
-            contadorCor++
-        }
-        let contadorModelo = contModelo
-        if (cont > 3) {
+        if (listProdutosJson.produtos[cont].cores == undefined) {
             console.log('**************************************************')
-            cont++
+        } else {
+            while (contadorCor < listProdutosJson.produtos[cont].cores.length) {
+                console.log('    *' + listProdutosJson.produtos[cont].cores[contadorCor])
+                contadorCor++
+            }
+        }
+
+        let contadorModelo = contModelo
+        if (listProdutosJson.produtos[cont].modelo == undefined) {
+            console.log('**************************************************')
         } else {
             console.log('Modelos: ')
             while (contadorModelo < listProdutosJson.produtos[cont].modelo.length) {
@@ -290,10 +296,79 @@ const relatorioDeProdutos = function () {
                 contadorModelo++
             }
             console.log('**************************************************')
-            cont++
+        }
+        cont++
+    }
+}
+
+const relatorioDeProdutosMarcel = function () {
+    let listProdutosJson = {}
+    let listProdutosArray = [
+        { nome: 'Monitor', quantidade: 500, marca: 'DELL', valor: 1000, descricao: 'Monitor dell de ultima geração', codigo: 1 },
+        { nome: 'Monitor', quantidade: 300, marca: 'LG', valor: 1500, descricao: 'Monitor LG de ultima geração 144hz', codigo: 2 },
+        { nome: 'Teclado', quantidade: 200, marca: 'Redragon', valor: 200, descricao: 'Teclado mecanico de ultima geração', codigo: 3 },
+        { nome: 'Teclado', quantidade: 400, marca: 'Logitech', valor: 500, descricao: 'Teclado mecanico de ultima geração', codigo: 4 },
+        { nome: 'Mouse', quantidade: 600, marca: 'Logitech', valor: 350, descricao: 'Mouse de ultima geração, com 25K de DPI', codigo: 5 },
+        { nome: 'Mouse', quantidade: 300, marca: 'Razer', valor: 300, descricao: 'Mouse de ultima geração, com 16K de dpi', codigo: 6 }
+    ]
+
+    let listCoresDellArray = ['Preto', 'Branco', 'Cinza']
+    let listCoresLgArray = ['Preto', 'Cinza']
+    let listCoresTecladoArray = ['Preto', 'Branco', 'Cinza', 'Rosa', 'Azul']
+    let listCoresMouseArray = ['Preto', 'Branco', 'Azul', 'Verde', 'Rosa', 'Amarelo', 'Vermelho', 'Roxo', 'Cinza']
+
+    // Adiciona Array de produtos dentro de um JSON
+    listProdutosJson.produtos = listProdutosArray
+
+    // Adicionar cores ao monitor dell
+    listProdutosJson.produtos[0].cores = listCoresDellArray
+
+    // Adicionar cores ao monitor lg
+    listProdutosJson.produtos[1].cores = listCoresLgArray
+
+    // Adicionar cores ao teclado
+    listProdutosJson.produtos[2].cores = listCoresTecladoArray
+    listProdutosJson.produtos[3].cores = listCoresTecladoArray
+
+    // Adicionar cores ao mouse
+    listProdutosJson.produtos[4].cores = listCoresMouseArray
+    listProdutosJson.produtos[5].cores = listCoresMouseArray
+
+    // Arrays para modelos
+    let listModeloMonitor = ['LCD', 'LED', 'OLED', '4K', '5K', 'IPS']
+    let listModeloTeclado = ['Mecânico', 'SemiMecânico', 'Membrana', 'ÓPTICO']
+
+    // Adicionar modelos monitores
+    listProdutosJson.produtos[0].modelo = listModeloMonitor
+    listProdutosJson.produtos[1].modelo = listModeloMonitor
+
+    // Adicionar modelos teclado
+    listProdutosJson.produtos[2].modelo = listModeloTeclado
+    listProdutosJson.produtos[3].modelo = listModeloTeclado
+
+    //Percorre o array de produtos para listar os itens
+    console.log('****************** Relátorio ******************')
+    listProdutosJson.produtos.forEach(function (itemProduto) {
+        console.log('Nome: ' + itemProduto.nome)
+        console.log('Marca: ' + itemProduto.marca)
+
+        //Percorre o array para listar as cores
+        if (itemProduto.cores != undefined) {
+            console.log('Cores: ')
+            itemProduto.cores.forEach(function (itemCor) {
+                console.log(`   *${itemCor}`)
+            })
         }
 
-    }
+        if (itemProduto.modelo != undefined) {
+            //Percorre o arrat para listar os modelos
+            console.log('Modelos: ')
+            itemProduto.modelo.forEach(function (itemModelo) {
+                console.log(`   *${itemModelo}`)
+            })
+        }
+        console.log('***********************************************')
+    })
 }
 
 relatorioDeProdutos()
