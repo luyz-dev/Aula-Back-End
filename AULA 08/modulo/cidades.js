@@ -12,7 +12,6 @@ let pegarEstados = brasil.estadosCidades.estados
 const getListaDeEstados = function () {
     let listaJson = {}
     let uf = []
-    let quantidade
 
     pegarEstados.forEach((estado) => uf.push(estado.sigla))
 
@@ -26,7 +25,7 @@ const getListaDeEstados = function () {
 
 const getDadosEstado = function (sigla) {
     let uf = sigla
-    let listaDados = {}
+    let listaDados
 
     pegarEstados.forEach((estados) => {
         if(estados.sigla == uf){
@@ -38,9 +37,64 @@ const getDadosEstado = function (sigla) {
             }
         }
     })
-    return listaDados
+    
+    if(listaDados == undefined){
+        return false
+    }else{
+        return listaDados
+    }
+}
+
+const getCapitalEstado = function(sigla){
+    let uf = sigla
+    let listaDados
+
+    pegarEstados.forEach((estados) => {
+        if(estados.sigla == uf){
+            listaDados = {
+                uf: estados.sigla,
+                descricao: estados.nome,
+                capital: estados.capital,
+            }
+        }
+    })
+    
+    if(listaDados == undefined){
+        return false
+    }else{
+        return listaDados
+    }
+}
+
+const getEstadosRegiao = function(regiaoVar){
+    let regiao = regiaoVar.toUpperCase()
+    let listaRegiao
+    let listaEstados
+    let listaArray = []
+
+    pegarEstados.forEach((estados) =>{
+        
+        if(estados.regiao == regiao){
+            listaEstados = {
+                uf: estados.sigla,
+                descricao: estados.nome
+            }
+        }
+        listaArray.push(listaEstados)
+    })
+
+    pegarEstados.forEach((estados) => {
+        if(estados.regiao == regiao){
+            listaRegiao = {
+                regiao: estados.regiao,
+                estados: listaArray
+            }
+        }
+    })
+
+    return listaRegiao
 }
 
 
 
-console.log(getDadosEstado('SP'))
+console.log(getEstadosRegiao('SUL'))
