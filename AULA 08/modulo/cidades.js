@@ -26,75 +26,158 @@ const getListaDeEstados = function () {
 const getDadosEstado = function (sigla) {
     let uf = sigla
     let listaDados
+    let status
 
-    pegarEstados.forEach((estados) => {
-        if(estados.sigla == uf){
-            listaDados = {
-                uf: estados.sigla,
-                descricao: estados.nome,
-                capital: estados.capital,
-                regiao: estados.regiao
+    if (uf == undefined) {
+        status = false
+    } else {
+        pegarEstados.forEach((estados) => {
+            if (estados.sigla.toUpperCase() == uf.toUpperCase()) {
+                listaDados = {
+                    uf: estados.sigla,
+                    descricao: estados.nome,
+                    capital: estados.capital,
+                    regiao: estados.regiao
+                }
             }
+        })
+
+        if (listaDados == undefined) {
+            status = false
+        } else {
+            status = listaDados
         }
-    })
-    
-    if(listaDados == undefined){
-        return false
-    }else{
-        return listaDados
+
     }
+    return status
 }
 
-const getCapitalEstado = function(sigla){
+const getCapitalEstado = function (sigla) {
     let uf = sigla
     let listaDados
+    let status
+
+    if (uf == undefined) {
+        status = false
+    } else {
+        pegarEstados.forEach((estados) => {
+            if (estados.sigla.toUpperCase() == uf.toUpperCase()) {
+                listaDados = {
+                    uf: estados.sigla,
+                    descricao: estados.nome,
+                    capital: estados.capital,
+                }
+            }
+        })
+
+        if (listaDados == undefined) {
+            status = false
+        } else {
+            status = listaDados
+        }
+    }
+    return status
+}
+
+const getEstadosRegiao = function (regiaoVar) {
+    let regiao = regiaoVar
+    let listaRegiao
+    let listaArray
+    let listaEstados = []
+    let status
+
+    if (regiao == undefined) {
+        status = false
+    } else {
+
+        pegarEstados.forEach((estados) => {
+
+            if (estados.regiao.toUpperCase() == regiao.toUpperCase()) {
+                listaArray = {
+                    uf: estados.sigla,
+                    descricao: estados.nome,
+
+                }
+
+                listaEstados.push(listaArray)
+
+                listaRegiao = {
+                    regia: estados.regiao,
+                    estados: listaEstados
+                }
+            }
+
+        })
+
+        if (listaRegiao == undefined) {
+            status = false
+        } else {
+            status = listaRegiao
+        }
+    }
+    return status
+}
+
+const getCapitalPais = function () {
+    let listaArray
+    let capitais = []
+    let listaEstados = {}
+    let status = true
 
     pegarEstados.forEach((estados) => {
-        if(estados.sigla == uf){
-            listaDados = {
+        if (estados.capital_pais != undefined) {
+            listaEstados = {
+                capital_atual: estados.capital_pais.capital,
                 uf: estados.sigla,
                 descricao: estados.nome,
                 capital: estados.capital,
+                regiao: estados.regiao,
+                capital_pais_ano_inicio: estados.capital_pais.ano_inicio,
+                capital_pais_ano_fim: estados.capital_pais.ano_fim
+            }
+            capitais.push(listaEstados)
+            listaArray = {
+                capitais
             }
         }
     })
-    
-    if(listaDados == undefined){
-        return false
-    }else{
-        return listaDados
+
+    if (listaArray == undefined) {
+        status = false
+    } else {
+        status = listaArray
+    }
+    return status
+}
+
+const getCidades = function (sigla) {
+    let uf = sigla
+    let cidades = []
+    let listaArray = []
+    let status
+
+    if (uf == undefined) {
+        status = false
+    } else {
+        pegarEstados.forEach((estados) => {
+            if (estados.sigla == uf) {
+                estados.cidades.forEach((cidade) => {
+                    cidades.push(cidade.nome)
+                })
+                listaArray = {
+                    uf: estados.sigla,
+                    descricao: estados.nome,
+                    quantidade: estados.cidades.length,
+                    cidades: cidades
+                }
+            }
+        })
+        if (listaArray == undefined) {
+            status = false
+        } else {
+            status = listaArray
+        }
+        return status
     }
 }
-
-const getEstadosRegiao = function(regiaoVar){
-    let regiao = regiaoVar.toUpperCase()
-    let listaRegiao
-    let listaEstados
-    let listaArray = []
-
-    pegarEstados.forEach((estados) =>{
-        
-        if(estados.regiao == regiao){
-            listaEstados = {
-                uf: estados.sigla,
-                descricao: estados.nome
-            }
-        }
-        listaArray.push(listaEstados)
-    })
-
-    pegarEstados.forEach((estados) => {
-        if(estados.regiao == regiao){
-            listaRegiao = {
-                regiao: estados.regiao,
-                estados: listaArray
-            }
-        }
-    })
-
-    return listaRegiao
-}
-
-
-
-console.log(getEstadosRegiao('SUL'))
+console.log(getEstadosRegiao('Sul'))
