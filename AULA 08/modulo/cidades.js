@@ -160,7 +160,7 @@ const getCidades = function (sigla) {
         status = false
     } else {
         pegarEstados.forEach((estados) => {
-            if (estados.sigla == uf) {
+            if (estados.sigla.toUpperCase() == uf.toUpperCase()) {
                 estados.cidades.forEach((cidade) => {
                     cidades.push(cidade.nome)
                 })
@@ -180,4 +180,4 @@ const getCidades = function (sigla) {
         return status
     }
 }
-console.log(getEstadosRegiao('Sul'))
+console.log(getCidades('AC'))
