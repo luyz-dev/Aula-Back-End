@@ -153,7 +153,7 @@ const getCapitalPais = function () {
 const getCidades = function (sigla) {
     let uf = sigla
     let cidades = []
-    let listaArray = []
+    let listaArray
     let status
 
     if (uf == undefined) {
