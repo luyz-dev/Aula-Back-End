@@ -69,7 +69,7 @@ app.get('/estados', cors(), async function (request, response, next) {
 })
 
 //EndPoint: Lista os dados do estado filtrando pela sigla do estado
-app.get('/estado/:uf', cors(), async function (request, response, next) {
+app.get('/estado/sigla/:uf', cors(), async function (request, response, next) {
 
     let statusCode
     let dadosEstados = {}
@@ -160,7 +160,7 @@ app.get('/capitais', cors(), async function(request, response, next){
 
 })
 
-app.get('/cidades/:uf', cors(), async function(request, response, next){
+app.get('/v1/cidades/estados/sigla/:uf', cors(), async function(request, response, next){
 
     let statusCode
     let dadosCidades = {}
@@ -182,6 +182,40 @@ app.get('/cidades/:uf', cors(), async function(request, response, next){
     }
     response.status(statusCode)
     response.json(dadosCidades)
+})
+
+app.get('/v2-marcel/cidades', cors(), async function(request, response, next){
+
+    /*
+        Existem 2 opções para receber variáveis para filtro>
+            params - que permite receber a varivel na estrutura da url
+                criada no endPoint (geralmente utilizada para ID (PK))
+            
+            query - Tambem conhecido como query string permite receber uma ou muitas variaveis para
+                realizar filtros avançados    
+     */
+
+    //Recebe uma variavel encaminhada via QuerrtString
+    let siglaEstado = request.query.uf
+    let statusCode
+    let dadosCidades = {}
+
+    if (siglaEstado.length != 2 || siglaEstado == '' || siglaEstado == undefined || !isNaN(siglaEstado)) {
+        statusCode = 400
+        dadosCidades.message = 'Não foi possivel processar os dados de entrada (uf) que foi enviado não corresponde ao exigido, confira o valor, pois não pode ser vazio, precisa ser caracter e ter dois digitos'
+    } else {
+        let cidades = estadosCidades.getCidades(siglaEstado)
+
+        if(cidades){
+            statusCode = 200
+            dadosCidades = cidades
+        }else{
+            statusCode = 404
+        }
+    }
+    response.status(statusCode)
+    response.json(dadosCidades)
+
 })
 
 app.listen(8080, () => { console.log('Servidor aguardando requisição na porta 8080.') })
