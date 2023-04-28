@@ -37,7 +37,7 @@ app.use((request, response, next) => {
 /************************************************************************************************
  * Objetivo: API de controle de ALUNOS
  * Autor: Luiz Gustavo
- * Data: 24/04/2023
+ * Data: 28/04/2023
  * Versão: 1.0
 ************************************************************************************************/
 
@@ -52,44 +52,64 @@ app.use((request, response, next) => {
  */
 
 //Import do araquivo da controler que irá solicitar a model os do BD
-let controllerAluno = require('./controller/controller_aluno.js')
+var controllerAluno = require('./controller/controller_aluno.js')
 
-//EndPoint: Retornar todos os dados de alunos
+//Define que os dados que irão chegar no body da requisição será no padrão JSON
+const bodyParserJSON = bodyParser.json()
+
+//EndPoint: Retornar todos os dados de alunos ou filtra pelo nome
 app.get('/v1/lion-school/aluno', cors(), async function (request, response) {
+    let nomeAluno = request.query.nome
 
-    //Recebe od dados da controller do aluno
-    let dadosAluno = await controllerAluno.ctlGetAlunos()
+    if (nomeAluno != undefined) {
+        let dadosAluno = await controllerAluno.ctlGetBuscarAlunoNome(nomeAluno)
 
-    //Valida se existe registros de aluno
-    if (dadosAluno) {
-        response.json(dadosAluno)
-        response.status(200)
+        if (dadosAluno) {
+            response.status(200)
+            response.json(dadosAluno)
+        } else {
+            response.status(404)
+            response.json('O SERVIDOR NÃO ENCONTROU O SOLICITADO')
+        }
     } else {
-        response.json()
-        response.status(404)
+        //Recebe od dados da controller do aluno
+        let dadosAluno = await controllerAluno.ctlGetAlunos()
+
+        //Valida se existe registros de aluno
+        if (dadosAluno) {
+            response.json(dadosAluno)
+            response.status(200)
+        } else {
+            response.status(404)
+            response.json()
+        }
     }
 })
 
 //EndPoint: Retornar o aluno filtrando pelo ID
 app.get('/v1/lion-school/aluno/:id', cors(), async function (request, response) {
     let idAluno = request.params.id
-    
+
     let dadosAluno = await controllerAluno.ctlGetBuscarAlunosID(idAluno)
 
-    if (idAluno == null || idAluno == undefined || isNaN(idAluno) || dadosAluno == false || dadosAluno == undefined) {
-        response.json()
-        response.status(404)
-    } else {
-        response.json(dadosAluno)
+    if (dadosAluno) {
         response.status(200)
+        response.json(dadosAluno)
+    } else {
+        response.status(404)
+        response.json('O SERVIDOR NÃO ENCONTROU O SOLICITADO')
     }
 })
 
 //EndPoint: Insere um dado novo
-app.post('/v1/lion-school/aluno', cors(), async function (request, response) {
+app.post('/v1/lion-school/aluno', cors(), bodyParserJSON, async function (request, response) {
+    //Recebe os dados encaminhados na requisição
+    let dadosBody = request.body
 
+    let resultDadosAlunos = await controllerAluno.ctlInserirAluno(dadosBody)
 
-
+    response.status(resultDadosAlunos.status)
+    response.json(resultDadosAlunos)
 })
 
 //EndPoint: Atualiza um aluno existente, filtrando pelo id

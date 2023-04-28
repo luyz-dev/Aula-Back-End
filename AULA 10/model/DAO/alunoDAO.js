@@ -1,9 +1,16 @@
 /************************************************************************************************
  * Objetivo: Responsável pea manipulação de dados dos ALUNOS no Banco de Dados
  * Autor: Luiz Gustavo
- * Data: 14/04/2023
+ * Data: 28/04/2023
  * Versão: 1.0
 ************************************************************************************************/
+
+/**
+    //$queryRawUnsafe( ) -> Permite interpretar uma variavel como sendo um scriptSQL
+    //$queryRaw( ) -> Esse executa o comando dentro de aspas e não podendo interpretar uma variavel
+
+
+ */
 
 //Import da biblioteca do prisma client
 var { PrismaClient } = require('@prisma/client')
@@ -11,9 +18,30 @@ var { PrismaClient } = require('@prisma/client')
 //Instancia da Classe PrismaClient 
 var prisma = new PrismaClient()
 
-//Inserir dados deo alino no Banco de Dados
-const mdlInsertAluno = (dadosAluno) => {
-    
+//Inserir dados deo aluno no Banco de Dados
+const mdlInsertAluno = async (dadosAluno) => {
+    let sql = `insert into tbl_aluno(
+        nome, 
+        rg, 
+        cpf, 
+        data_nascimento, 
+        email
+    ) values (
+        '${dadosAluno.nome}', 
+        '${dadosAluno.rg}', 
+        '${dadosAluno.cpf}', 
+        '${dadosAluno.data_nascimento}',
+        '${dadosAluno.email}'
+    )`
+
+    //Executa o scriptSQL no BD
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if(resultStatus){
+        return true
+    }else{
+        return false
+    }
 }
 
 //Atualizar dados do aluno no Banco de Dados
@@ -54,7 +82,22 @@ const mdlSelectByIdAluno = async (id) => {
     }
 }
 
+//Inserir dados do aluno no Banco de Dados
+const mdlSelectByNomeAluno = async (nome) => {
+    let sql = `select * from tbl_aluno where nome like '%${nome}%'`
+
+    let rsAluno = await prisma.$queryRawUnsafe(sql)
+
+    if(rsAluno.length > 0){
+        return rsAluno
+    }else{
+        return false
+    }
+}
+
 module.exports = {
     mdlSelectAllAluno,
-    mdlSelectByIdAluno
+    mdlSelectByIdAluno,
+    mdlSelectByNomeAluno,
+    mdlInsertAluno
 }
