@@ -1,7 +1,7 @@
 /************************************************************************************************
  * Objetivo: Responsável pela regra de negócio referente ao CRUD de ALUNOS
  * Autor: Luiz Gustavo
- * Data: 28/04/2023
+ * Data: 05/05/2023
  * Versão: 1.0
 ************************************************************************************************/
 
@@ -17,7 +17,9 @@ var message = require('./modulo/config.js')
 let alunoDao = require('../model/DAO/alunoDAO.js')
 
 //Insere um novo aluno
-const ctlInserirAluno = async (dadosAluno) => {    
+const ctlInserirAluno = async (dadosAluno) => {  
+
+    //Validação para tratar campos obrigatórios e quantidade de caracteres   
     if(
         dadosAluno.nome == ''               || dadosAluno.nome == undefined             || dadosAluno.nome.length > 100             ||
         dadosAluno.rg == ''                 || dadosAluno.rg == undefined               || dadosAluno.rg.length > 15                ||
@@ -39,14 +41,52 @@ const ctlInserirAluno = async (dadosAluno) => {
     }
 }
 
-//Insere um novo aluno
-const ctlAtuzalizarAluno = (dadosAluno) => {
+//Atualiza um aluno existente
+const ctlAtuzalizarAluno = async (dadosAluno, idALuno) => {
+    
+    //Validação para tratar campos obrigatórios e quantidade de caracteres   
+    if(
+        dadosAluno.nome == ''               || dadosAluno.nome == undefined             || dadosAluno.nome.length > 100             ||
+        dadosAluno.rg == ''                 || dadosAluno.rg == undefined               || dadosAluno.rg.length > 15                ||
+        dadosAluno.cpf == ''                || dadosAluno.cpf == undefined              || dadosAluno.cpf.length > 18               ||
+        dadosAluno.data_nascimento == ''    || dadosAluno.data_nascimento == undefined  || dadosAluno.data_nascimento.length > 10   ||
+        dadosAluno.email == ''              || dadosAluno.email == undefined            || dadosAluno.email.length > 200
+    ){
+        return message.ERROR_REQUIRE_FIELDS //Status coda 400
 
+    //Validação de ID incorreto ou não informado
+    }else if (idALuno == null || idALuno == undefined || isNaN(idALuno)){
+        return message.ERROR_INVALID_ID //Status coda 400
+    }else{
+        //Adiciona o ID do aluno no JSON dos dados
+        dadosAluno.id = idALuno
+
+        let resultDadosAlunos = await alunoDao.mdlUpdateAluno(dadosAluno)
+
+        //Valida se o BD inseriu corretamente
+        if(resultDadosAlunos){
+            return message.SUCCESS_UPDATED_ITEM
+        }else{
+            return message.ERROR_INTERNAL_SERVER
+        }
+    }
 }
 
 //Exclui um aluno existente
-const ctlExcluirAluno = (id) => {
+const ctlExcluirAluno = async (idAluno) => {
 
+    if (idAluno == null || idAluno == undefined || idAluno == '' || isNaN(idAluno)) {
+        return message.ERROR_REQUIRE_FIELDS
+    } else {
+
+        let dadosAluno = await alunoDao.mdlDeleteAluno(idAluno)
+
+        if(dadosAluno){
+            return message.SUCCESS_DELETED_ITEM
+        }else{
+            return message.ERROR_INTERNAL_SERVER
+        }
+    }
 }
 
 //Retorna a lista de todos os alunos
@@ -77,7 +117,7 @@ const ctlGetBuscarAlunosID = async (id) => {
         if(dadosAluno){
             return {dadosAluno}
         }else{
-            return false
+            return message.ERROR_REGISTER_NOT_FOUND
         }
     }
 }
@@ -94,7 +134,6 @@ const ctlGetBuscarAlunoNome = async (nome) => {
         }else{
             return false
         }
-        
     }
 }
 
@@ -102,5 +141,7 @@ module.exports = {
     ctlGetAlunos,
     ctlGetBuscarAlunosID,
     ctlGetBuscarAlunoNome,
-    ctlInserirAluno
+    ctlInserirAluno,
+    ctlAtuzalizarAluno,
+    ctlExcluirAluno
 }
