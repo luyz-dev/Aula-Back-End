@@ -119,11 +119,25 @@ const mdlSelectByNomeAluno = async (nome) => {
     }
 }
 
+//Retorno o id inserido no banco de dados
+const mdlSelectLastByID = async () => {
+    let sql = `select * from tbl_aluno order by id desc limit 1;`
+
+    let rsAluno = await prisma.$queryRawUnsafe(sql)
+
+    if(rsAluno.length > 0){
+        return rsAluno
+    }else{
+        return false
+    }
+}
+
 module.exports = {
     mdlSelectAllAluno,
     mdlSelectByIdAluno,
     mdlSelectByNomeAluno,
     mdlInsertAluno,
     mdlUpdateAluno,
-    mdlDeleteAluno
+    mdlDeleteAluno,
+    mdlSelectLastByID
 }

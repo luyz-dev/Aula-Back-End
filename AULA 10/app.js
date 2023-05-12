@@ -37,7 +37,7 @@ app.use((request, response, next) => {
 /************************************************************************************************
  * Objetivo: API de controle de ALUNOS
  * Autor: Luiz Gustavo
- * Data: 05/05/2023
+ * Data: 12/05/2023
  * Versão: 1.0
 ************************************************************************************************/
 
@@ -66,25 +66,14 @@ app.get('/v1/lion-school/aluno', cors(), async function (request, response) {
     if (nomeAluno != undefined) {
         let dadosAluno = await controllerAluno.ctlGetBuscarAlunoNome(nomeAluno)
 
-        if (dadosAluno) {
-            response.status(200)
-            response.json(dadosAluno)
-        } else {
-            response.status(message.ERROR_INVALID_NOME.status)
-            response.json(message.ERROR_INVALID_NOME)
-        }
+        response.status(dadosAluno.status)
+        response.json(dadosAluno)
     } else {
         //Recebe od dados da controller do aluno
         let dadosAluno = await controllerAluno.ctlGetAlunos()
 
-        //Valida se existe registros de aluno
-        if (dadosAluno) {
-            response.json(dadosAluno)
-            response.status(200)
-        } else {
-            response.status(message.ERROR_INTERNAL_SERVER.status)
-            response.json(message.ERROR_INTERNAL_SERVER)
-        }
+        response.status(dadosAluno.status)
+        response.json(dadosAluno)
     }
 })
 
@@ -94,7 +83,7 @@ app.get('/v1/lion-school/aluno/:id', cors(), async function (request, response) 
 
     let dadosAluno = await controllerAluno.ctlGetBuscarAlunosID(idAluno)
 
-    response.status(200)
+    response.status(dadosAluno.status)
     response.json(dadosAluno)
 
 })
@@ -149,18 +138,12 @@ app.delete('/v1/lion-school/aluno/:id', cors(), async function (request, respons
 
     //Recebe o ID do aluno pelo parametro
     let idALuno = request.params.id;
+    
+    let resultDadosAlunos = await controllerAluno.ctlExcluirAluno(idALuno)
 
-    let retornoAluno = await controllerAluno.ctlGetBuscarAlunosID(idALuno)
+    response.status(resultDadosAlunos.status)
+    response.json(resultDadosAlunos)
 
-    if (retornoAluno.status == 404) {
-        response.status(retornoAluno.status)
-        response.json(retornoAluno)
-    } else {
-        let resultDadosAlunos = await controllerAluno.ctlExcluirAluno(idALuno)
-
-        response.status(resultDadosAlunos.status)
-        response.json(resultDadosAlunos)
-    }
 })
 
 app.listen(8080, () => console.log('Servidor aguardando requisições na porta 8080'))
